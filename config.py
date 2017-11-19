@@ -24,4 +24,7 @@ substitution_matrix = np.zeros(shape = (26,26), dtype = int, order = 'C')
 # K iteration value for unsupervised rules based method
 K = 4
 
+word_dict = {}
 
+# n gram size
+ngram_size = 3

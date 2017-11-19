@@ -210,7 +210,7 @@ def stemmer(word):
 
 
 
-def findEditDist(s1, s2):
+def find_edit_dist(s1, s2):
     # Description:
     #   This function finds Levenstein edit distance between two strings
     # Args:
@@ -270,6 +270,21 @@ def count_pattern(words, pattern):
     return count
     #else:
     #    print("Error! Attempting to find empty pattern in a word: ", pattern)
+
+def matching_pattern(words, pattern):
+    # Description:
+    #   This function returns iterates over a list of words, and returns those that matches the given pattern
+    # Args:
+    #   list of words, a pattern to search
+    # Returns:
+    #   a list of the words that match the pattern
+    result = []
+    for word in words:
+        candidate = re.match(pattern,word)
+        if(candidate):
+            result.append(word)
+    return result
+
 
 def delete(word, position=0, numOfChar=1):
     # This function deleted one or more characters from the specified position
@@ -356,4 +371,13 @@ def add(word, new_char, position=0):
     else:
         print("Error! Addition character cannot be empty")
 
-
+def word_frequency_voting(words):
+    word_freq_dict = {}
+    number_of_words = len(words)
+    word_set = set(words)
+    for word in word_set:
+        if word not in word_freq_dict:
+            word_freq_dict[word] = words.count(word)
+    for word in word_freq_dict.keys(): # normalised voting for over all votes cast. Note that all votes cast == number of candidates
+        word_freq_dict[word] = word_freq_dict[word]/number_of_words
+    return word_freq_dict

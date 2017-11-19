@@ -5,28 +5,35 @@ import config,string
 
 
 def noisy_channel_evaluation(train, word_dict, number_of_terms):
+    # Description:
+    #   This function finds all candidates for words in the training set as per the noisy_channel approach
+    # Args:
+    #   training set, size of training set
+    # Returns:
+    #   a dictionary of dictionaries of words in training set against their candidates with the voting count
     possible_corrections = spelling_correction_training(train, word_dict.keys())
-    match_list = []
+    result = {}
     for i in range(0, len(possible_corrections)):
-        result = []
+        intermediate_result = {}
         word = possible_corrections[i][0]
         candidate_list = possible_corrections[i][1]
         for candidate in candidate_list:
             candidate_word = candidate[1]
-            language_model_probability = find_language_model_probability(candidate,
-                                                                         train)  # Setting a very low value instead of zero
-            # language_model_probability = config.deletion_matrix[]
-            edit_dist = findEditDist(word, candidate_word)
+            language_model_probability = find_language_model_probability(candidate,train)  # Setting a very low value instead of zero
+            #edit_dist = findEditDist(word, candidate_word)
             candidate_relative_freq_percentage = config.min_value  # so there is no null value problem
             if candidate_word in word_dict:
                 candidate_freq = word_dict[candidate_word]
                 candidate_relative_freq_percentage = (0.5 + candidate_freq * 100) / number_of_terms
-            result.append([word, candidate_word, candidate_relative_freq_percentage, edit_dist])
-            print(word, " ", candidate, " lang_model_prob: ", language_model_probability, " edit dist: ", edit_dist,
-                  " relative freq.: ", candidate_relative_freq_percentage)
-        match_list.append(result)
+            if candidate_word not in intermediate_result:
+                intermediate_result[candidate_word] = candidate_relative_freq_percentage
+            #result.append([word, candidate_word, candidate_relative_freq_percentage])
+        if(len(intermediate_result)>0) and word not in result:
+            #result.append([word, intermediate_result])
+            result[word] = intermediate_result
+            print(word, " ", candidate, " lang_model_prob: ", language_model_probability, " relative freq.: ", candidate_relative_freq_percentage)
 
-    return match_list
+    return result
 
 def find_uncorrectable_words(word_list):
     # Description:
