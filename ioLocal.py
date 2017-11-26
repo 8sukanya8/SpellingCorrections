@@ -1,5 +1,5 @@
 import re
-import numpy as np
+import numpy as np, matplotlib.pyplot as plt
 
 
 def readWholeText(filename):
@@ -207,9 +207,6 @@ def stemmer(word):
     return transformed_word
 
 
-
-
-
 def find_edit_dist(s1, s2):
     # Description:
     #   This function finds Levenstein edit distance between two strings
@@ -381,3 +378,22 @@ def word_frequency_voting(words):
     for word in word_freq_dict.keys(): # normalised voting for over all votes cast. Note that all votes cast == number of candidates
         word_freq_dict[word] = word_freq_dict[word]/number_of_words
     return word_freq_dict
+
+
+def plot_data(data, row_name_list, xlabel = '', ylabel = '', main = ''):
+    rows = len(data)
+    design = ['ro','bs', 'g^']
+    if(rows != len(row_name_list)):
+        print("Error! Unnamed columns exist!")
+        return
+    for i in  range (1, rows):
+        plt.plot(data[0], data[i], design[i-1], label=row_name_list[i])
+    #plt.plot(plot_time[0], plot_time[2], , label='n gram channel')
+    #plt.plot(plot_time[0], plot_time[3], 'g^', label='unsupervised channel')
+    plt.ylabel(ylabel)
+    plt.xlabel(xlabel)
+    plt.title(s=main, loc='center')
+    plt.legend(loc='upper right')
+    plt.show()
+    return
+

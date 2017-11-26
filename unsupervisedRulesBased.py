@@ -1,6 +1,6 @@
 import re
 from ioLocal import add, delete, matching_pattern, word_frequency_voting
-import config
+import config,time
 
 
 def rule1(word, K):
@@ -164,7 +164,7 @@ def candidate_generation(word):
     return result
 
 
-def unsupervised_rules_evaluation(train, number_of_terms):
+def unsupervised_rules_evaluation(list):
     # Description:
     #   This function finds all possible candidates for each word in the training set
     # Args:
@@ -172,10 +172,13 @@ def unsupervised_rules_evaluation(train, number_of_terms):
     # Returns:
     #   A dictionary of dictionaries of each word against candidates with the voting value of each candidate
     result = {}
-    for word in train:
+    for word in list:
+        start = time.time()
         temp_result = candidate_generation(word)
+        end = time.time()
+        elapsed = end - start
         if(len(temp_result)>0) and word not in result:
-            result[word]= temp_result
+            result[word]= [temp_result,elapsed]
     return result
 
 

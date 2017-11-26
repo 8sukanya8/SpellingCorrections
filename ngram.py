@@ -1,6 +1,5 @@
-from ioLocal import readWholeText, splitText, matching_pattern, word_frequency_voting
-import re
-import config
+from ioLocal import splitText, matching_pattern, word_frequency_voting
+import config,time,re
 
 
 def unigram_word(text):
@@ -45,6 +44,13 @@ def bigram_word(text):
             bigram_dict[word] = bigram.count(word)
     return bigram_dict
 
+def bigram_count(bigrams, search_word):
+    sum = 0
+    for key in bigrams.keys():
+        if (re.match(search_word, key)) or re.match('^[\w ]*'+search_word,key):
+            sum = sum + bigrams[key]
+            #print(key, bigrams[key])
+    return sum
 
 def trigram_word(text):
     # Description:
@@ -108,7 +114,7 @@ def ngram_candidates(word):
     return result
 
 
-def ngram_evaluation(train, number_of_terms):
+def ngram_evaluation(train):
     # Description:
     #   This function finds all candidates for words in the training set as per the n-gram approach
     # Args:
@@ -117,9 +123,12 @@ def ngram_evaluation(train, number_of_terms):
     #   a dictionary of dictionaries of words in training set against their candidates with the voting count
     candidates = {}
     for word in train:
+        start = time.time()
         temp_result = ngram_candidates(word)
+        end = time.time()
+        elapsed = end - start
         if(len(temp_result)>0) and word not in candidates:
-            candidates[word] = temp_result
+            candidates[word] = [temp_result, elapsed]
         #for entry in temp_result:
         #    candidates.append(entry)
     #result = word_frequency_voting(candidates)
