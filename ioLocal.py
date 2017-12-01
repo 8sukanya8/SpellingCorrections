@@ -283,6 +283,7 @@ def matching_pattern(words, pattern):
     return result
 
 
+
 def delete(word, position=0, numOfChar=1):
     # This function deleted one or more characters from the specified position
     #

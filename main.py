@@ -1,7 +1,7 @@
 from ioLocal import readWholeText, find_edit_dist, create_dict_stem_from_freq_list, readFileIntoList, plot_data, \
     splitText
 import config, time, matplotlib.pyplot as plt
-from ngram import ngram_evaluation, unigram_word, bigram_word, trigram_word, bigram_count
+from ngram import ngram_evaluation, unigram_word, bigram_word, trigram_word, bigram_count, matching_bigrams
 from noisyChannel import noisy_channel_evaluation, find_uncorrectable_words
 
 # Creating dictionary from different documents
@@ -184,6 +184,8 @@ plot_data(bigram_frequency, ['count', 'noisy channel', 'n gram channel', 'unsupe
 print("\n\nTesting Output 2\n\n")
 print('Testing for context based spelling correction')
 
+text = readWholeText(config.ngram_filename).lower()
+
 unigram = unigram_word(text)
 bigram = bigram_word(text)
 trigram = trigram_word(text)
@@ -191,4 +193,14 @@ trigram = trigram_word(text)
 test_ngram = readWholeText(config.ngram_test_filename).lower()
 test_ngram = splitText(test_ngram)
 
+for i in range(1, len(test_ngram)-1):
+    if test_ngram[i] not in config.word_dict.keys():
+        previous = test_ngram[i-1]
+        #previous_max = matching_bigrams(bigram, previous, 'previous', 10)
+        after = test_ngram[i+1]
+        #after_max = matching_bigrams(bigram, after, 'after', 10)
+        print(previous_max," ", test_ngram[i], " ", after_max)
 
+
+# prev + suggested word by the models
+# after +

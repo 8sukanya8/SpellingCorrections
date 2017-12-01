@@ -134,4 +134,19 @@ def ngram_evaluation(train):
     #result = word_frequency_voting(candidates)
     return candidates
 
+def matching_bigrams(bigrams, match, type = 'previous', max = 1):
+    match_list = {}
+    if(type =='previous'):
+        expr = match
+    elif (type == 'after'):
+        expr = '[\w ]*' + match + '$'
+    else:
+        print('Error! type error! type can be only \'previous\' or \'after\'')
+    for word in bigrams:
+        if(re.match(expr, word)):
+            match_list[word]= bigrams[word]
+            #print(word, " ", bigrams[word])
+    match_list_sorted = sorted(match_list.items(), key=lambda x: x[1])
+    return match_list_sorted [len(match_list_sorted)-max-1 : len(match_list_sorted)-1]
+
 
