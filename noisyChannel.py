@@ -31,6 +31,7 @@ def noisy_channel_evaluation(train, word_dict, type_of_data):
             if candidate_word not in intermediate_result:
                 intermediate_result[candidate_word] = candidate_relative_freq_percentage
             #result.append([word, candidate_word, candidate_relative_freq_percentage])
+        intermediate_result = sorted(intermediate_result.items(), key=lambda x: x[1], reverse=True)
         end = time.time()
         elapsed =  end - start
         if(len(intermediate_result)>0) and word not in result:

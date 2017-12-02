@@ -30,3 +30,6 @@ word_dict = {}
 
 # n gram size
 ngram_size = 3
+
+# confidence threshold Beta
+beta = 0.3

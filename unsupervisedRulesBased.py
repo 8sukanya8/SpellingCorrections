@@ -175,6 +175,7 @@ def unsupervised_rules_evaluation(list):
     for word in list:
         start = time.time()
         temp_result = candidate_generation(word)
+        temp_result = sorted(temp_result.items(), key=lambda x: x[1], reverse=True)
         end = time.time()
         elapsed = end - start
         if(len(temp_result)>0) and word not in result:

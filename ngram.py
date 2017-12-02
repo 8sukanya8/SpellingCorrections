@@ -1,5 +1,6 @@
 from ioLocal import splitText, matching_pattern, word_frequency_voting
 import config,time,re
+from collections import Counter
 
 
 def unigram_word(text):
@@ -18,7 +19,6 @@ def unigram_word(text):
             result[word] = words.count(word)
     return result
 
-
 def bigram_word(text):
     # Description:
     #   This function finds all bigram words in a given text
@@ -32,17 +32,21 @@ def bigram_word(text):
     bigram_dict = {}
     for i in range(1, len(words)-1):
         word = words[i]
-        next_word = words[i+1]
         previous_word = words[i-1]
-        bigram.append(word+' '+ next_word)
         bigram.append(previous_word + ' ' + word)
-    unique_bigrams = set(bigram)
-    #print("\n\n Number of unique bigrams:", len(unique_bigrams))
-    for word in unique_bigrams:
-        #print(bigram.count(word))
-        if word not in bigram_dict:
-            bigram_dict[word] = bigram.count(word)
+    bigram_dict = Counter(bigram)
     return bigram_dict
+    #unique_bigrams = set(bigram)
+    #print("\n\n Number of unique bigrams:", len(unique_bigrams))
+    #for word in unique_bigrams:
+        #print(bigram.count(word))
+    #    if word not in bigram_dict:
+    #        bigram_dict[word] = bigram.count(word)
+
+#start = time.time()
+#bigram_word(text)
+#end = time.time()
+#print("Time taken with Counter",end -start)
 
 def bigram_count(bigrams, search_word):
     sum = 0
@@ -125,6 +129,7 @@ def ngram_evaluation(train):
     for word in train:
         start = time.time()
         temp_result = ngram_candidates(word)
+        temp_result = sorted(temp_result.items(), key=lambda x: x[1], reverse=True)
         end = time.time()
         elapsed = end - start
         if(len(temp_result)>0) and word not in candidates:
