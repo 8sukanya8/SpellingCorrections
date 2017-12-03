@@ -164,13 +164,16 @@ def candidate_generation(word):
     return result
 
 
-def unsupervised_rules_evaluation(list):
+def unsupervised_rules_evaluation(list, skip_notification = False):
     # Description:
     #   This function finds all possible candidates for each word in the training set
     # Args:
     #   training set
     # Returns:
     #   A dictionary of dictionaries of each word against candidates with the voting value of each candidate
+    start_unsupervised_rules = time.time()
+    if (not skip_notification):
+        print("\n\nUnsupervised model evaluation started...")
     result = {}
     for word in list:
         start = time.time()
@@ -180,6 +183,12 @@ def unsupervised_rules_evaluation(list):
         elapsed = end - start
         if(len(temp_result)>0) and word not in result:
             result[word]= [temp_result,elapsed]
+    end_unsupervised_rules = time.time()
+    average_time_unsupervised_rules_train = (end_unsupervised_rules - start_unsupervised_rules) / len(list)
+    if (not skip_notification):
+        print("Unsupervised model evaluation started...")
+        print("Total time taken by unsupervised rules:", (end_unsupervised_rules - start_unsupervised_rules))
+        print("Average time taken by Unsupervised Rules:", average_time_unsupervised_rules_train)
     return result
 
 

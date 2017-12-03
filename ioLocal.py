@@ -383,7 +383,7 @@ def word_frequency_voting(words):
 
 def plot_data(data, row_name_list, xlabel = '', ylabel = '', main = ''):
     rows = len(data)
-    design = ['ro','bs', 'g^']
+    design = ['ro','bs', 'g^', 'yD','kp' ]
     if(rows != len(row_name_list)):
         print("Error! Unnamed columns exist!")
         return
@@ -397,4 +397,16 @@ def plot_data(data, row_name_list, xlabel = '', ylabel = '', main = ''):
     plt.legend(loc='upper right')
     plt.show()
     return
+
+
+def filterAlpha(text):
+    # Description:
+    #   This function returns only alphabets and removes digits
+    # Args:
+    #   given text
+    # Returns:
+    #   modified text
+
+    return re.sub('\d', '', text)
+
 

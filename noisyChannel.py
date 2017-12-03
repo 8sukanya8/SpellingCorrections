@@ -2,13 +2,16 @@ from ioLocal import count_pattern, add, delete, reverse, substitute
 import config,string,time
 
 
-def noisy_channel_evaluation(train, word_dict, type_of_data):
+def noisy_channel_evaluation(train, word_dict, type_of_data, skip_notification = False):
     # Description:
     #   This function finds all candidates for words in the training set as per the noisy_channel approach
     # Args:
     #   training set, size of training set
     # Returns:
     #   a dictionary of dictionaries of words in training set against their candidates with the voting count
+    if (not skip_notification):
+        print("\n\nNoisy Channel model evaluation started...")
+    start_noisy_channel = time.time()
     number_of_terms = sum(config.word_dict.values())
     if(type_of_data == 'train'):
         possible_corrections = spelling_correction_train(train, word_dict.keys()) # for the training set, the operation matrices are updated
@@ -38,7 +41,12 @@ def noisy_channel_evaluation(train, word_dict, type_of_data):
             #result.append([word, intermediate_result])
             result[word] = [intermediate_result, elapsed]
             #print(word, " ", candidate, " lang_model_prob: ", language_model_probability, " relative freq.: ", candidate_relative_freq_percentage)
-
+    end_noisy_channel = time.time()
+    average_time_noisy_channel_train = (end_noisy_channel - start_noisy_channel) / len(train)
+    if (not skip_notification):
+        print("Noisy Channel model evaluation ended")
+        print("Total time taken by Noisy Channel:", (end_noisy_channel - start_noisy_channel))
+        print("Average time taken by Noisy Channel: ", average_time_noisy_channel_train)
     return result
 
 def find_uncorrectable_words(word_list):
