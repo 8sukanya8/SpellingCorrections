@@ -2,8 +2,9 @@ import numpy as np
 
 list_of_filenames = ['Dataset/Frequency.USpresidents.txt'] # following format, one [frequency word] entry, per line in document
 mistake_filenames =  ['Dataset/mistakes2.txt'] # following format, one incorrect word per line
+mistake_correction_filename = 'Dataset/corrections_for_mistakes2.txt' # contains all correct word list for mistakes
 ngram_test_filename = 'Dataset/Obama_Speech_mistakes.txt' # Speech extract of Obama with mistakes
-ngram_test_filename_correct = 'Dataset/Obama_Speech_correct.txt'
+ngram_test_filename_correct = 'Dataset/Obama_correct_word_list.txt'
 ngram_filename = 'Dataset/FederalistTraining.txt'
 # smoothing factor
 smoothing_factor = 0.01
