@@ -10,12 +10,16 @@ To detect incorrect words and use one or more models to find suitable correction
 [4] Compares performance of all models on the test set <br />
 
 ### Noisy Channel Model
+Contains all the functions for training according to the [Kernighan, Church, Gale](https://dl.acm.org/citation.cfm?id=997975) probabilistic Noisy Channel
 
 ### Unsupervised Rules Model
+Contains all the functions for training according to Unsupervised rules in  [Soo and Frieder](http://ir.cs.georgetown.edu/downloads/jsoo-jasist.pdf)
 
 ### N gram characters Model
+Contains all the functions for training according to the Ngram model
 
 ### UnsupervisedNgram Model
 (Combination of Unsupervised Rules and N gram characters)
 
-### Combined Model
+## How to run?
+python3 main.py
